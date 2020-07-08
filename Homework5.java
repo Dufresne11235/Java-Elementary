@@ -149,8 +149,8 @@ class GuideDog extends Dog {
 
     public void voice() {
         super.voice();
-        System.out.print(" I can take you home, come with me if you want to live");
+        if (isTrained){
+            System.out.print(" I can take you home, come with me if you want to live");
+        }
     }
 }
-
-
