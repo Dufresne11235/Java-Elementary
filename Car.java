@@ -37,11 +37,11 @@ public class Car {
 }
 
 class CarDrive {
-    public static void main(String[] args) {
-        int Kryve = 180;
-        int Zhashkiv = 160;
-        int Kyiv = 150;
+    static int Kryve = 180;
+    static int Zhashkiv = 160;
+    static int Kyiv = 150;
 
+    public static void main(String[] args) {
         Car car1 = new Car(40, 60, 7);
         car1.checkTank();
         car1.pitStop();
