@@ -1,9 +1,40 @@
 package jelesson4;
 
-public class Car {
+import java.text.DecimalFormat;
+
+enum Town {
+    Kryve(180), Zhashkiv(160), Kyiv(150);
+    private int distance;
+
+    Town(int distance) {
+        this.distance = distance;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+}
+
+public class Homework4 {
+    public static void main(String[] args) {
+        Car car1 = new Car(40, 60, 7);
+        car1.checkTank();
+        car1.pitStop();
+        car1.checkPath(490, 30);
+        car1.drive(Town.Kryve);
+        car1.pitStop();
+        car1.drive(Town.Zhashkiv);
+        car1.pitStop();
+        car1.drive(Town.Kyiv);
+        car1.checkTank();
+    }
+}
+
+class Car {
     double tankCurrent = 0;
     double tankMax = 0;
     double fuelPer100 = 0;
+    DecimalFormat df = new DecimalFormat("0.0");
 
     public Car(double tankCurrent, double tankMax, double fuelPer100) {
         this.tankCurrent = tankCurrent;
@@ -17,40 +48,23 @@ public class Car {
 
     public void checkPath(int distance, double price) {
         double fuelNeeded = distance * fuelPer100 / 100;
-        System.out.println("Fuel needed: " + fuelNeeded + ", " + (tankCurrent - fuelNeeded) + " will be left");
-        System.out.println("The trip will cost " + fuelNeeded * price + " UAH");
+        System.out.println("Fuel needed: " + fuelNeeded + ", " + df.format(tankCurrent - fuelNeeded) + " will be left");
+        DecimalFormat cf = new DecimalFormat("0.00");
+        System.out.println("The trip will cost " + cf.format(fuelNeeded * price) + " UAH");
     }
 
     public double pitStop() {
         double refuel = tankMax - tankCurrent;
         tankCurrent += refuel;
-        System.out.println(refuel + " fuel refilled");
+
+        System.out.println(df.format(refuel) + " fuel refilled");
         return refuel;
     }
 
-    public double drive(int distance) {
-        double fuelSpent = distance * fuelPer100 / 100;
+    public double drive(Town town) {
+        double fuelSpent = town.getDistance() * fuelPer100 / 100;
         tankCurrent -= fuelSpent;
-        System.out.println(distance + " km passed, " + fuelSpent + " fuel spent");
+        System.out.println(town.getDistance() + " km to " + town.name() + " passed, " + fuelSpent + " fuel spent");
         return fuelSpent;
-    }
-}
-
-class CarDrive {
-    static int Kryve = 180;
-    static int Zhashkiv = 160;
-    static int Kyiv = 150;
-
-    public static void main(String[] args) {
-        Car car1 = new Car(40, 60, 7);
-        car1.checkTank();
-        car1.pitStop();
-        car1.checkPath(490, 30);
-        car1.drive(Kryve);
-        car1.pitStop();
-        car1.drive(Zhashkiv);
-        car1.pitStop();
-        car1.drive(Kyiv);
-        car1.checkTank();
     }
 }
