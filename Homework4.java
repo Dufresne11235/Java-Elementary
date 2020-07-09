@@ -3,7 +3,7 @@ package jelesson4;
 import java.text.DecimalFormat;
 
 enum Town {
-    Kryve(180), Zhashkiv(160), Kyiv(150);
+    KRYVE(180), ZHASHKIV(160), KYIV(150);
     private int distance;
 
     Town(int distance) {
@@ -21,11 +21,11 @@ public class Homework4 {
         car1.checkTank();
         car1.pitStop();
         car1.checkPath(490, 30);
-        car1.drive(Town.Kryve);
+        car1.drive(Town.KRYVE);
         car1.pitStop();
-        car1.drive(Town.Zhashkiv);
+        car1.drive(Town.ZHASHKIV);
         car1.pitStop();
-        car1.drive(Town.Kyiv);
+        car1.drive(Town.KYIV);
         car1.checkTank();
     }
 }
@@ -34,7 +34,7 @@ class Car {
     double tankCurrent = 0;
     double tankMax = 0;
     double fuelPer100 = 0;
-    DecimalFormat df = new DecimalFormat("0.0");
+    DecimalFormat df = new DecimalFormat("0.#");
 
     public Car(double tankCurrent, double tankMax, double fuelPer100) {
         this.tankCurrent = tankCurrent;
