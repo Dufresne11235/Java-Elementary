@@ -63,7 +63,7 @@ public class Homework6 {
 
 abstract class Animal {
     static int counter;
-    public int id;
+    int id;
     int age;
     int weight;
     String color;
