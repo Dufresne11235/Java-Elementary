@@ -1,38 +1,11 @@
 package jelesson6;
 
 interface Voice {
-    default void voice() {
-        System.out.print("\n" + ((Animal) this).id + " Hello, ");
-        if (this instanceof Feral) {
-            System.out.print("I am a wild animal " + this.getClass().getSimpleName());
-            if (((Feral) this).isPredator) {
-                System.out.print(" and I am angry");
-            }
-        } else if (this instanceof Pet) {
-            System.out.print("my name is " + ((Pet) this).name + ".");
-            if (this instanceof Cat) {
-                System.out.print(" Meow!");
-            } else if (this instanceof Dog) {
-                System.out.print(" Woof!");
-                if (this instanceof GuideDog) {
-                    if (((GuideDog) this).isTrained) {
-                        System.out.print(" I can take you home, come with me if you want to live.");
-                    }
-                }
-            }
-        }
-
-    }
+    void voice();
 }
 
 interface Swim {
-    default void swim() {
-        if (this instanceof Croco) {
-            System.out.print(" *swings tail in the water*");
-        } else if (this instanceof Fish) {
-            System.out.print(" *wiggles fins in the water*");
-        }
-    }
+    void swim();
 }
 
 public class Homework6 {
@@ -61,7 +34,7 @@ public class Homework6 {
     }
 }
 
-abstract class Animal {
+abstract class Animal implements Voice {
     static int counter;
     int id;
     int age;
@@ -74,86 +47,129 @@ abstract class Animal {
         this.weight = weight;
         this.color = color;
     }
-}
 
-abstract class Feral extends Animal {
-    boolean isPredator;
-
-    public Feral(int age, int weight, String color, boolean isPredator) {
-        super(age, weight, color);
-        this.isPredator = isPredator;
+    public void voice() {
+        System.out.print("\n" + id + " Hello, ");
     }
 }
 
-abstract class Pet extends Animal {
-    String name;
-    boolean isVaccinated;
+abstract class Feral extends Animal implements Voice {
+    boolean predator;
 
-    public Pet(int age, int weight, String color, String name, boolean isVaccinated) {
+    public Feral(int age, int weight, String color, boolean predator) {
+        super(age, weight, color);
+        this.predator = predator;
+    }
+
+    public void voice() {
+        super.voice();
+        System.out.print("I am a wild animal " + this.getClass().getSimpleName());
+        if (predator) {
+            System.out.print(" and I am angry ");
+        }
+    }
+}
+
+abstract class Pet extends Animal implements Voice {
+    String name;
+    boolean vaccinated;
+
+    public Pet(int age, int weight, String color, String name, boolean vaccinated) {
         super(age, weight, color);
         this.name = name;
-        this.isVaccinated = isVaccinated;
+        this.vaccinated = vaccinated;
+    }
+
+    public void voice() {
+        super.voice();
+        System.out.print("my name is " + name + ".");
     }
 }
 
 class Wolf extends Feral implements Voice {
-    public Wolf(int age, int weight, String color, boolean isPredator) {
-        super(age, weight, color, isPredator);
+    public Wolf(int age, int weight, String color, boolean predator) {
+        super(age, weight, color, predator);
     }
 }
 
 class Lion extends Feral implements Voice {
-    public Lion(int age, int weight, String color, boolean isPredator) {
-        super(age, weight, color, isPredator);
+    public Lion(int age, int weight, String color, boolean predator) {
+        super(age, weight, color, predator);
     }
 }
 
 class Croco extends Feral implements Voice, Swim {
-    public Croco(int age, int weight, String color, boolean isPredator) {
-        super(age, weight, color, isPredator);
+    public Croco(int age, int weight, String color, boolean predator) {
+        super(age, weight, color, predator);
+    }
+
+    @Override
+    public void swim() {
+        System.out.print("\n*swings tail in the water*");
     }
 }
 
 class Giraffe extends Feral implements Voice {
-    public Giraffe(int age, int weight, String color, boolean isPredator) {
-        super(age, weight, color, isPredator);
+    public Giraffe(int age, int weight, String color, boolean predator) {
+        super(age, weight, color, predator);
     }
 }
 
 class Fish extends Pet implements Voice, Swim {
-    public Fish(int age, int weight, String color, String name, boolean isVaccinated) {
-        super(age, weight, color, name, isVaccinated);
+    public Fish(int age, int weight, String color, String name, boolean vaccinated) {
+        super(age, weight, color, name, vaccinated);
+    }
+
+    public void voice() {
+        System.out.print("\n°°°bloop°°°");
     }
 
     @Override
-    public void voice() {
-        System.out.print("\n" + id + " " + getClass().getSimpleName() + " °°°bloop°°°");
+    public void swim() {
+        System.out.print("\n*wiggles fins in the water*");
     }
 }
 
 class Hamster extends Pet implements Voice {
-    public Hamster(int age, int weight, String color, String name, boolean isVaccinated) {
-        super(age, weight, color, name, isVaccinated);
+    public Hamster(int age, int weight, String color, String name, boolean vaccinated) {
+        super(age, weight, color, name, vaccinated);
     }
 }
 
 class Cat extends Pet implements Voice {
-    public Cat(int age, int weight, String color, String name, boolean isVaccinated) {
-        super(age, weight, color, name, isVaccinated);
+    public Cat(int age, int weight, String color, String name, boolean vaccinated) {
+        super(age, weight, color, name, vaccinated);
+    }
+
+    public void voice() {
+        super.voice();
+        System.out.print(" Meow!");
     }
 }
 
 class Dog extends Pet implements Voice {
-    public Dog(int age, int weight, String color, String name, boolean isVaccinated) {
-        super(age, weight, color, name, isVaccinated);
+    public Dog(int age, int weight, String color, String name, boolean vaccinated) {
+        super(age, weight, color, name, vaccinated);
+    }
+
+    public void voice() {
+        super.voice();
+        System.out.print(" Woof!");
     }
 }
 
 class GuideDog extends Dog implements Voice {
-    boolean isTrained;
+    boolean trained;
 
-    public GuideDog(int age, int weight, String color, String name, boolean isVaccinated, boolean isTrained) {
-        super(age, weight, color, name, isVaccinated);
-        this.isTrained = isTrained;
+    public GuideDog(int age, int weight, String color, String name, boolean vaccinated, boolean trained) {
+        super(age, weight, color, name, vaccinated);
+        this.trained = trained;
+    }
+
+    public void voice() {
+        super.voice();
+        if (trained) {
+            System.out.print(" I can take you home, come with me if you want to live");
+        }
     }
 }
